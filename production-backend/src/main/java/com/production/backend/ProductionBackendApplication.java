@@ -1,4 +1,4 @@
-package com.mateus.production_backend;
+package com.production.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
