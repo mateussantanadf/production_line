@@ -16,13 +16,13 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer code;
+    private Long code;
 
     @Column(nullable = false)
     private String name;
 
     @Column(nullable = false, scale = 2)
-    private BigDecimal value;
+    private BigDecimal price;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Composition> compositions = new ArrayList<>();

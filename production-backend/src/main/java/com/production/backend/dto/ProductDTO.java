@@ -17,7 +17,7 @@ public class ProductDTO {
 
     @NotNull
     @Positive
-    private BigDecimal value;
+    private BigDecimal price;
 
     @Valid
     private List<CompositionDTO> compositions;

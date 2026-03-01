@@ -15,7 +15,7 @@ public class Resource {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer code;
+    private Long code;
 
     @Column(nullable = false)
     private String name;

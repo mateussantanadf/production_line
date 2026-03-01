@@ -25,11 +25,11 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{code}")
     public ResponseEntity<ProductResponse> update(
-            @PathVariable Integer id,
+            @PathVariable Long code,
             @Valid @RequestBody ProductDTO dto) {
-        ProductResponse response = service.update(id, dto);
+        ProductResponse response = service.update(code, dto);
         return ResponseEntity.ok(response);
     }
 
@@ -38,10 +38,10 @@ public class ProductController {
         return ResponseEntity.ok(service.findAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{code}")
     public ResponseEntity<ProductResponse> findById(
-            @PathVariable Integer id) {
+            @PathVariable Long code) {
 
-        return ResponseEntity.ok(service.findById(id));
+        return ResponseEntity.ok(service.findById(code));
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
-public interface ProductRepository extends JpaRepository<Product, Integer> {
+public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("""
         SELECT DISTINCT p
@@ -22,7 +22,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
         FROM Product p
         LEFT JOIN FETCH p.compositions c
         LEFT JOIN FETCH c.resource
-        WHERE p.id = :id
+        WHERE p.code = :code
     """)
-    Optional<Product> findByIdWithResources(Integer id);
+    Optional<Product> findByIdWithResources(Long code);
 }

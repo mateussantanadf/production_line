@@ -5,7 +5,7 @@ import com.production.backend.entity.Product;
 import com.production.backend.response.ProductResponse;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = CompositionMapper.class)
 public interface ProductMapper {
 
     ProductResponse toResponse(Product product);

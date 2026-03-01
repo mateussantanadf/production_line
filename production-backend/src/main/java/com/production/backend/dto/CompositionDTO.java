@@ -8,7 +8,7 @@ import lombok.Getter;
 public class CompositionDTO {
 
     @NotNull
-    private Integer resourceId;
+    private Long resourceCode;
 
     @NotNull
     @Positive

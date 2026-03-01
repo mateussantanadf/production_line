@@ -31,7 +31,7 @@ public class ProductService {
         if (productDTO.getCompositions() != null) {
 
             for (CompositionDTO compositionDTO : productDTO.getCompositions()) {
-                Resource resource = resourceService.findEntityById(compositionDTO.getResourceId());
+                Resource resource = resourceService.findEntityByCode(compositionDTO.getResourceCode());
 
                 Composition composition = new Composition();
                 composition.setProduct(product);
@@ -47,17 +47,17 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductResponse update(Integer id, ProductDTO dto) {
+    public ProductResponse update(Long code, ProductDTO dto) {
 
-        Product product = productRepository.findById(id)
+        Product product = productRepository.findById(code)
                 .orElseThrow(() -> new EntityNotFoundException("Product not found"));
 
         product.setName(dto.getName());
-        product.setValue(dto.getValue());
+        product.setPrice(dto.getPrice());
         product.getCompositions().clear();
 
         for (CompositionDTO compositionDTO : dto.getCompositions()) {
-            Resource resource = resourceService.findEntityById(compositionDTO.getResourceId());
+            Resource resource = resourceService.findEntityByCode(compositionDTO.getResourceCode());
 
             Composition composition = new Composition();
             composition.setProduct(product);
@@ -70,17 +70,15 @@ public class ProductService {
         return mapper.toResponse(product);
     }
 
-    @Transactional(readOnly = true)
     public List<ProductResponse> findAll() {
         List<Product> products = productRepository.findAllWithResources();
 
         return products.stream().map(mapper::toResponse).toList();
     }
 
-    @Transactional(readOnly = true)
-    public ProductResponse findById(Integer id) {
+    public ProductResponse findById(Long code) {
 
-        Product product = productRepository.findByIdWithResources(id)
+        Product product = productRepository.findByIdWithResources(code)
                 .orElseThrow(() ->
                         new EntityNotFoundException("Product not found"));
 

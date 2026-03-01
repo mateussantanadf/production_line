@@ -12,14 +12,14 @@ public class Composition {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "product_code", nullable = false)
     private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "resource_id", nullable = false)
+    @JoinColumn(name = "resource_code", nullable = false)
     private Resource resource;
 
     @Column(nullable = false)

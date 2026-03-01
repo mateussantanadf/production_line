@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class CompositionResponse {
 
-    private Integer resourceId;
+    private Long resourceCode;
     private String resourceName;
     private Integer qtdResource;
 }

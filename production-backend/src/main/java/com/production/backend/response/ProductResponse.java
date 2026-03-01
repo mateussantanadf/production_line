@@ -1,15 +1,17 @@
 package com.production.backend.response;
 
+import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.List;
 
+@Getter
 @Setter
 public class ProductResponse {
 
-    private Integer code;
+    private Long code;
     private String name;
-    private BigDecimal value;
+    private BigDecimal price;
     private List<CompositionResponse> compositions;
 }

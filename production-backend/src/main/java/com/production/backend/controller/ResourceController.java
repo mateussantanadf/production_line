@@ -27,12 +27,12 @@ public class ResourceController {
                 .body(service.create(dto));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{code}")
     public ResponseEntity<ResourceResponse> update(
-            @PathVariable Integer id,
+            @PathVariable Long code,
             @Valid @RequestBody ResourceDTO dto) {
 
-        return ResponseEntity.ok(service.update(id, dto));
+        return ResponseEntity.ok(service.update(code, dto));
     }
 
     @GetMapping
@@ -41,10 +41,10 @@ public class ResourceController {
         return ResponseEntity.ok(service.findAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{code}")
     public ResponseEntity<ResourceResponse> findById(
-            @PathVariable Integer id) {
+            @PathVariable Long code) {
 
-        return ResponseEntity.ok(service.findById(id));
+        return ResponseEntity.ok(service.findById(code));
     }
 }

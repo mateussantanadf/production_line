@@ -30,9 +30,9 @@ public class ResourceService {
     }
 
     @Transactional
-    public ResourceResponse update(Integer id, ResourceDTO dto) {
+    public ResourceResponse update(Long code, ResourceDTO dto) {
 
-        Resource resource = repository.findById(id)
+        Resource resource = repository.findById(code)
                 .orElseThrow(() -> new RuntimeException("Resource not found"));
 
         resource.setName(dto.getName());
@@ -41,7 +41,6 @@ public class ResourceService {
         return mapper.toResponse(resource);
     }
 
-    @Transactional
     public List<ResourceResponse> findAll() {
 
         return repository.findAll()
@@ -50,19 +49,17 @@ public class ResourceService {
                 .toList();
     }
 
-    @Transactional(readOnly = true)
-    public ResourceResponse findById(Integer id) {
+    public ResourceResponse findById(Long code) {
 
-        Resource resource = repository.findById(id)
+        Resource resource = repository.findById(code)
                 .orElseThrow(() -> new RuntimeException("Resource not found"));
 
         return mapper.toResponse(resource);
     }
 
-    @Transactional(readOnly = true)
-    public Resource findEntityById(Integer id) {
+    public Resource findEntityByCode(Long code) {
 
-        return repository.findById(id)
+        return repository.findById(code)
                 .orElseThrow(() -> new EntityNotFoundException("Resource not found"));
     }
 }
