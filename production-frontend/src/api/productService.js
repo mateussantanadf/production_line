@@ -13,7 +13,7 @@ export default {
     return api.post("/products", data);
   },
 
-  update(code, data) {
-    return api.put(`/products/${code}`, data);
+  update(code, payload) {
+    return api.put(`/products/${code}`, payload);
   }
 };

@@ -54,7 +54,6 @@ onMounted(async () => {
   <div class="container">
     <h2>🏭 Production Center</h2>
 
-    <!-- Sugestões -->
     <div class="card">
       <h3>📊 Production Suggestions</h3>
 
@@ -82,7 +81,6 @@ onMounted(async () => {
       <p v-else>No suggestions available.</p>
     </div>
 
-    <!-- Produção Manual -->
     <div class="card">
       <h3>⚙️ Manual Production</h3>
 

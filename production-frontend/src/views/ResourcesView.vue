@@ -6,6 +6,9 @@ const resources = ref([]);
 const loading = ref(false);
 const error = ref(null);
 
+const isEditing = ref(false);
+const editingCode = ref(null);
+
 const form = ref({
   name: "",
   qtdStock: ""
@@ -25,23 +28,61 @@ const loadResources = async () => {
 
 const createResource = async () => {
   try {
-    if (!form.value.name || !form.value.stock) {
+    if (!form.value.name || form.value.qtdStock === "") {
       alert("Fill in all the fields.");
       return;
     }
 
     await resourceService.create({
       name: form.value.name,
-      stock: Number(form.value.stock)
+      qtdStock: Number(form.value.qtdStock)
     });
 
-    form.value.name = "";
-    form.value.qtdStock = "";
-
+    resetForm();
     await loadResources();
   } catch (err) {
     alert("Error adding resource");
   }
+};
+
+const editResource = (resource) => {
+  isEditing.value = true;
+  editingCode.value = resource.code;
+
+  form.value.name = resource.name;
+  form.value.qtdStock = resource.stock;
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+const updateResource = async () => {
+  try {
+    if (!form.value.name || form.value.qtdStock === "") {
+      alert("Fill in all the fields.");
+      return;
+    }
+
+    await resourceService.update(editingCode.value, {
+      name: form.value.name,
+      qtdStock: Number(form.value.qtdStock)
+    });
+
+    resetForm();
+    await loadResources();
+  } catch (err) {
+    alert("Error updating resource");
+  }
+};
+
+const cancelEdit = () => {
+  resetForm();
+};
+
+const resetForm = () => {
+  form.value.name = "";
+  form.value.qtdStock = "";
+  isEditing.value = false;
+  editingCode.value = null;
 };
 
 onMounted(loadResources);
@@ -51,21 +92,29 @@ onMounted(loadResources);
   <div class="container">
     <h2>🧱 Resources</h2>
 
-    <!-- Cadastro -->
     <div class="form-card">
-      <h3>New Resource</h3>
+      <h3>{{ isEditing ? "Edit Resource" : "New Resource" }}</h3>
       <div class="form-group">
         <input v-model="form.name" placeholder="Name Resource" />
         <input
-          v-model="form.stock"
+          v-model="form.qtdStock"
           type="number"
           placeholder="Quantity in Stock"
         />
-        <button @click="createResource">Add</button>
+        <button @click="isEditing ? updateResource() : createResource()">
+            {{ isEditing ? "Update" : "Add" }}
+        </button>
+
+<button
+  v-if="isEditing"
+  style="background:#f87171;"
+  @click="cancelEdit"
+>
+  Cancel
+</button>
       </div>
     </div>
 
-    <!-- Lista -->
     <div class="table-card">
       <h3>Resources List</h3>
 
@@ -78,6 +127,7 @@ onMounted(loadResources);
             <th>ID</th>
             <th>Name</th>
             <th>Stock</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -85,6 +135,14 @@ onMounted(loadResources);
             <td>{{ r.code }}</td>
             <td>{{ r.name }}</td>
             <td>{{ r.stock }}</td>
+            <td>
+                <button
+                    style="background:#38bdf8;"
+                    @click="editResource(r)"
+                >
+                    Edit
+                </button>
+            </td>
           </tr>
         </tbody>
       </table>

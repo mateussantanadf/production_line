@@ -26,12 +26,24 @@ public class ProductService {
     @Transactional
     public ProductResponse create(ProductDTO productDTO) {
 
-        Product product = mapper.toEntity(productDTO);
+        Product product = new Product();
+        product.setName(productDTO.getName());
+        product.setPrice(productDTO.getPrice());
+        product.getCompositions().clear();
 
-        if (productDTO.getCompositions() != null) {
+        if (productDTO.getCompositions() != null && !productDTO.getCompositions().isEmpty()) {
 
             for (CompositionDTO compositionDTO : productDTO.getCompositions()) {
+
                 Resource resource = resourceService.findEntityByCode(compositionDTO.getResourceCode());
+
+                if (resource == null) {
+                    throw new RuntimeException("Resource not found");
+                }
+
+                if (compositionDTO.getQtdResource() <= 0) {
+                    throw new RuntimeException("Quantity must be greater than zero");
+                }
 
                 Composition composition = new Composition();
                 composition.setProduct(product);
