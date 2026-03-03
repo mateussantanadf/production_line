@@ -55,7 +55,7 @@ const createProduct = async () => {
 
     const compositions = selectedResources.map(r => {
 
-      const quantity = Number(r.quantity);
+      const quantity = Number(r.qtdResource);
 
       if (!quantity || quantity <= 0) {
         throw new Error(`Invalid quantity for ${r.name}`);
@@ -84,7 +84,7 @@ const createProduct = async () => {
 
     resources.value.forEach(r => {
       r.selected = false;
-      r.quantity = 1;
+      r.qtdResource = 1;
     });
 
     await loadProducts();
